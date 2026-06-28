@@ -17,11 +17,10 @@ cp .env.example .env   # if needed
 php artisan key:generate
 touch database/database.sqlite
 php artisan migrate
-php artisan db:seed
 php artisan serve
 ```
 
-Default admin:
+Default admin (created by migration):
 
 - Email: `admin@d3wat.test`
 - Password: `password`
@@ -59,8 +58,7 @@ APP_URL=http://127.0.0.1:8000
 4. `php artisan key:generate`
 5. Ensure `database/database.sqlite` exists and is writable
 6. `php artisan migrate --force`
-7. `php artisan db:seed --force` (once, creates admin user)
-8. Writable: `storage/`, `bootstrap/cache/`, `database/`
+7. Writable: `storage/`, `bootstrap/cache/`, `database/`
 
 **Backup**: download `database/database.sqlite` periodically.
 
@@ -78,12 +76,12 @@ composer install --no-interaction --prefer-source --no-dev --optimize-autoloader
 
 **Optional (recommended):** In Forge → Server → Meta → add a [GitHub personal access token](https://github.com/settings/tokens) under Composer credentials to avoid GitHub rate limits during `git clone`.
 
-Default admin (seeded on each deploy):
+Default admin (created on first migrate):
 
 - Email: `admin@d3wat.test`
 - Password: `password`
 
-Each deploy runs `composer run-script deploy`, which migrates and seeds/updates the admin user.
+Each deploy runs `composer run-script deploy`, which migrates the database.
 
 **Optional (recommended):** In Forge → Server → Meta → add a [GitHub personal access token](https://github.com/settings/tokens) under Composer credentials to avoid GitHub rate limits during `git clone`.
 

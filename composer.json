@@ -51,8 +51,7 @@
         ],
         "deploy": [
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --force",
-            "@php artisan db:seed --class=AdminUserSeeder --force"
+            "@php artisan migrate --force"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

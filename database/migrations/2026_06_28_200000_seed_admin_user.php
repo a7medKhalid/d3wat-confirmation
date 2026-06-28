@@ -1,11 +1,9 @@
 <?php
 
-namespace Database\Seeders;
-
 use App\Models\User;
-use Illuminate\Database\Seeder;
+use Illuminate\Database\Migrations\Migration;
 
-class AdminUserSeeder extends Seeder
+return new class extends Migration
 {
     private const ADMIN_EMAIL = 'admin@d3wat.test';
 
@@ -13,7 +11,7 @@ class AdminUserSeeder extends Seeder
 
     private const ADMIN_PASSWORD = 'password';
 
-    public function run(): void
+    public function up(): void
     {
         User::query()->updateOrCreate(
             ['email' => self::ADMIN_EMAIL],
@@ -23,4 +21,9 @@ class AdminUserSeeder extends Seeder
             ],
         );
     }
-}
+
+    public function down(): void
+    {
+        User::query()->where('email', self::ADMIN_EMAIL)->delete();
+    }
+};
