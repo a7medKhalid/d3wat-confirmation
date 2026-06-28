@@ -78,15 +78,12 @@ composer install --no-interaction --prefer-source --no-dev --optimize-autoloader
 
 **Optional (recommended):** In Forge → Server → Meta → add a [GitHub personal access token](https://github.com/settings/tokens) under Composer credentials to avoid GitHub rate limits during `git clone`.
 
-After first deploy, set admin credentials in `.env` on the server:
+Default admin (seeded on each deploy):
 
-```env
-ADMIN_NAME=Admin
-ADMIN_EMAIL=you@example.com
-ADMIN_PASSWORD=your-secure-password
-```
+- Email: `admin@d3wat.test`
+- Password: `password`
 
-Each deploy runs `composer run-script deploy`, which migrates and seeds/updates the admin user (`updateOrCreate` by email).
+Each deploy runs `composer run-script deploy`, which migrates and seeds/updates the admin user.
 
 **Optional (recommended):** In Forge → Server → Meta → add a [GitHub personal access token](https://github.com/settings/tokens) under Composer credentials to avoid GitHub rate limits during `git clone`.
 

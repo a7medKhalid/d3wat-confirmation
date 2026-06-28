@@ -7,17 +7,19 @@ use Illuminate\Database\Seeder;
 
 class AdminUserSeeder extends Seeder
 {
+    private const ADMIN_EMAIL = 'admin@d3wat.test';
+
+    private const ADMIN_NAME = 'Admin';
+
+    private const ADMIN_PASSWORD = 'password';
+
     public function run(): void
     {
-        $email = (string) env('ADMIN_EMAIL', 'admin@d3wat.test');
-        $name = (string) env('ADMIN_NAME', 'Admin');
-        $password = (string) env('ADMIN_PASSWORD', 'password');
-
         User::query()->updateOrCreate(
-            ['email' => $email],
+            ['email' => self::ADMIN_EMAIL],
             [
-                'name' => $name,
-                'password' => $password,
+                'name' => self::ADMIN_NAME,
+                'password' => self::ADMIN_PASSWORD,
             ],
         );
     }
