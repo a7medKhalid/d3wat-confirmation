@@ -64,6 +64,27 @@ APP_URL=http://127.0.0.1:8000
 
 **Backup**: download `database/database.sqlite` periodically.
 
+## Laravel Forge deploy
+
+**Requirements:** PHP **8.3+**, web root = `public/`, SQLite writable at `database/database.sqlite`.
+
+If `composer install` fails with `codeload.github.com ... HTTP/2 400`, Forge cannot download zip archives from GitHub. This project sets `"preferred-install": "source"` in `composer.json` so Composer clones via git instead.
+
+Replace the Forge deployment script with [scripts/forge-deploy.sh](scripts/forge-deploy.sh), or at minimum change the install line to:
+
+```bash
+composer install --no-interaction --prefer-source --no-dev --optimize-autoloader
+```
+
+**Optional (recommended):** In Forge → Server → Meta → add a [GitHub personal access token](https://github.com/settings/tokens) under Composer credentials to avoid GitHub rate limits during `git clone`.
+
+After first deploy:
+
+```bash
+php artisan db:seed --force   # once, creates admin user
+chmod -R ug+rwx storage bootstrap/cache database
+```
+
 ## d3wat integration
 
 In the invite sender reminder mode:
