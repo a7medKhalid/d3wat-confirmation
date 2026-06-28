@@ -19,7 +19,7 @@ if [ ! -f database/database.sqlite ]; then
     touch database/database.sqlite
 fi
 
-php artisan migrate --force
+composer run-script deploy --no-interaction
 
 php artisan config:cache
 php artisan route:cache
