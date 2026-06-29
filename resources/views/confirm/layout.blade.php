@@ -4,90 +4,163 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'تأكيد الحضور')</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
+
         body {
             margin: 0;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-            background: linear-gradient(160deg, #f8f4ef 0%, #ebe4d8 100%);
-            color: #2c2418;
-            padding: 1.5rem;
+            padding: 1.25rem;
+            font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
+            color: #ffffff;
+            background: #1a1410 url("{{ asset('images/invite-bg.png') }}") center center / cover no-repeat fixed;
         }
-        .card {
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(12, 18, 14, 0.55) 0%,
+                rgba(20, 14, 16, 0.72) 45%,
+                rgba(10, 12, 10, 0.82) 100%
+            );
+            pointer-events: none;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
             width: 100%;
-            max-width: 28rem;
-            background: #fff;
-            border-radius: 1rem;
-            padding: 2rem 1.75rem;
+            max-width: 24rem;
             text-align: center;
-            box-shadow: 0 12px 40px rgba(44, 36, 24, 0.08);
         }
-        .icon {
-            width: 4rem;
-            height: 4rem;
+
+        .ornament {
+            width: 3.5rem;
+            height: 1px;
             margin: 0 auto 1.25rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
         }
-        .icon-success { background: #e8f5e9; color: #2e7d32; }
-        .icon-info { background: #fff8e1; color: #f57f17; }
-        .icon-error { background: #ffebee; color: #c62828; }
-        h1 {
-            margin: 0 0 0.75rem;
-            font-size: 1.5rem;
-            line-height: 1.4;
+
+        .ornament-bottom {
+            margin: 1.25rem auto 0;
         }
-        p {
+
+        .card-title {
+            margin: 0 0 0.5rem;
+            font-family: "Amiri", "Times New Roman", serif;
+            font-size: clamp(1.75rem, 6vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+        }
+
+        .guest-name {
+            display: inline-block;
+            margin: 0.75rem auto 1rem;
+            padding: 0.55rem 1.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.92);
+            border-radius: 999px;
+            font-family: "Amiri", serif;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(2px);
+        }
+
+        .message {
             margin: 0;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.94);
+            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        .message-strong {
+            margin: 0 0 0.75rem;
+            font-family: "Amiri", serif;
+            font-size: 1.35rem;
+            font-weight: 700;
             line-height: 1.7;
-            color: #5c5042;
         }
+
         .subtitle {
-            margin-top: 0.75rem;
-            font-size: 0.95rem;
+            margin-top: 0.85rem;
+            font-size: 0.92rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.78);
         }
+
+        .panel {
+            margin-top: 1.5rem;
+            padding: 1.5rem 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 1.25rem;
+            background: rgba(0, 0, 0, 0.18);
+            backdrop-filter: blur(4px);
+        }
+
         .actions {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.85rem;
             margin-top: 1.5rem;
         }
+
+        .btn-form {
+            margin: 0;
+        }
+
         .btn {
             display: block;
             width: 100%;
-            border: none;
-            border-radius: 0.75rem;
-            padding: 0.9rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.92);
+            border-radius: 999px;
+            padding: 0.95rem 1.25rem;
+            font-family: "Cairo", sans-serif;
             font-size: 1rem;
-            font-family: inherit;
+            font-weight: 400;
+            letter-spacing: 0.01em;
             cursor: pointer;
             text-decoration: none;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
         }
+
         .btn:hover {
+            background: rgba(255, 255, 255, 0.18);
             transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
         }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
         .btn-confirm {
-            background: #2e7d32;
-            color: #fff;
-            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.25);
+            border-color: rgba(255, 255, 255, 0.95);
         }
+
         .btn-decline {
-            background: #fff;
-            color: #5c5042;
-            border: 1px solid #d8cfc2;
+            border-color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.92);
         }
     </style>
 </head>
 <body>
-    <main class="card">
+    <main class="page">
         @yield('content')
     </main>
 </body>

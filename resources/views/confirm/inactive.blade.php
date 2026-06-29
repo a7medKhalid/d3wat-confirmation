@@ -3,7 +3,8 @@
 @section('title', 'غير متاح')
 
 @section('content')
-    <div class="icon icon-error">—</div>
-    <h1>التأكيد غير متاح حالياً</h1>
-    <p class="subtitle">لا توجد فعالية نشطة للتأكيد. يرجى المحاولة لاحقاً.</p>
+    <div class="ornament"></div>
+    <h1 class="card-title">غير متاح حالياً</h1>
+    <p class="message">لا توجد فعالية نشطة للتأكيد. يرجى المحاولة لاحقاً.</p>
+    <div class="ornament ornament-bottom"></div>
 @endsection

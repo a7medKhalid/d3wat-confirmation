@@ -3,20 +3,21 @@
 @section('title', 'تأكيد الحضور')
 
 @section('content')
-    <h1>
-        @if ($name)
-            مرحباً {{ $name }}
-        @else
-            مرحباً
-        @endif
-    </h1>
+    <div class="ornament"></div>
+    <h1 class="card-title">بطاقة الدخول</h1>
+
+    @if ($name)
+        <div class="guest-name">{{ $name }}</div>
+    @endif
+
     @if ($sessionTitle)
         <p class="subtitle">{{ $sessionTitle }}</p>
     @endif
-    <p class="subtitle">يرجى اختيار أحد الخيارين:</p>
+
+    <p class="message">يرجى اختيار أحد الخيارين</p>
 
     <div class="actions">
-        <form method="POST" action="{{ route('confirm.respond') }}">
+        <form class="btn-form" method="POST" action="{{ route('confirm.respond') }}">
             @csrf
             <input type="hidden" name="action" value="confirm">
             @if ($isDirect)
@@ -26,7 +27,7 @@
             <button type="submit" class="btn btn-confirm">تأكيد الحضور</button>
         </form>
 
-        <form method="POST" action="{{ route('confirm.respond') }}">
+        <form class="btn-form" method="POST" action="{{ route('confirm.respond') }}">
             @csrf
             <input type="hidden" name="action" value="decline">
             @if ($isDirect)
@@ -36,4 +37,6 @@
             <button type="submit" class="btn btn-decline">الاعتذار عن الحضور</button>
         </form>
     </div>
+
+    <div class="ornament ornament-bottom"></div>
 @endsection

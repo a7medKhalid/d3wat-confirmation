@@ -3,7 +3,8 @@
 @section('title', 'رابط غير صالح')
 
 @section('content')
-    <div class="icon icon-error">✕</div>
-    <h1>تعذر تأكيد الحضور</h1>
-    <p class="subtitle">{{ $message }}</p>
+    <div class="ornament"></div>
+    <h1 class="card-title">تعذر المتابعة</h1>
+    <p class="message">{{ $message }}</p>
+    <div class="ornament ornament-bottom"></div>
 @endsection
