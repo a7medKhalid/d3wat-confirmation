@@ -14,10 +14,11 @@ class ConfirmationStatsWidget extends StatsOverviewWidget
         $activeSession = ConfirmationSession::active();
 
         return [
-            Stat::make('إجمالي التأكيدات', Confirmation::query()->count()),
-            Stat::make('تأكيدات اليوم', Confirmation::query()->whereDate('confirmed_at', today())->count()),
+            Stat::make('زيارات الرابط', Confirmation::query()->count()),
+            Stat::make('تأكيد حضور', Confirmation::query()->where('status', Confirmation::STATUS_CONFIRMED)->count()),
+            Stat::make('اعتذار', Confirmation::query()->where('status', Confirmation::STATUS_DECLINED)->count()),
             Stat::make(
-                'تأكيدات الفعالية النشطة',
+                'زيارات الفعالية النشطة',
                 $activeSession
                     ? $activeSession->confirmations()->count()
                     : 0,

@@ -9,7 +9,6 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ConfirmationsTable
@@ -18,6 +17,19 @@ class ConfirmationsTable
     {
         return $table
             ->columns([
+                TextColumn::make('status')
+                    ->label('الحالة')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        Confirmation::STATUS_CONFIRMED => 'تأكيد حضور',
+                        Confirmation::STATUS_DECLINED => 'اعتذار',
+                        default => 'زيارة فقط',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        Confirmation::STATUS_CONFIRMED => 'success',
+                        Confirmation::STATUS_DECLINED => 'warning',
+                        default => 'gray',
+                    }),
                 TextColumn::make('mode')
                     ->label('النوع')
                     ->badge()
@@ -35,16 +47,28 @@ class ConfirmationsTable
                     ->label('الجوال')
                     ->placeholder('—')
                     ->searchable(),
-                TextColumn::make('confirmed_at')
-                    ->label('وقت التأكيد')
+                TextColumn::make('visited_at')
+                    ->label('وقت الزيارة')
                     ->dateTime()
+                    ->sortable(),
+                TextColumn::make('responded_at')
+                    ->label('وقت الرد')
+                    ->dateTime()
+                    ->placeholder('—')
                     ->sortable(),
                 TextColumn::make('ip_address')
                     ->label('IP')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->defaultSort('confirmed_at', 'desc')
+            ->defaultSort('visited_at', 'desc')
             ->filters([
+                SelectFilter::make('status')
+                    ->label('الحالة')
+                    ->options([
+                        Confirmation::STATUS_VISITED => 'زيارة فقط',
+                        Confirmation::STATUS_CONFIRMED => 'تأكيد حضور',
+                        Confirmation::STATUS_DECLINED => 'اعتذار',
+                    ]),
                 SelectFilter::make('mode')
                     ->label('النوع')
                     ->options([
@@ -75,19 +99,21 @@ class ConfirmationsTable
         return response()->streamDownload(function (): void {
             $handle = fopen('php://output', 'w');
             fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF));
-            fputcsv($handle, ['mode', 'session', 'name', 'phone', 'confirmed_at', 'ip_address']);
+            fputcsv($handle, ['status', 'mode', 'session', 'name', 'phone', 'visited_at', 'responded_at', 'ip_address']);
 
             Confirmation::query()
                 ->with('confirmationSession')
-                ->orderByDesc('confirmed_at')
+                ->orderByDesc('visited_at')
                 ->chunk(200, function ($rows) use ($handle): void {
                     foreach ($rows as $row) {
                         fputcsv($handle, [
+                            $row->statusLabel(),
                             $row->mode,
                             $row->confirmationSession?->title,
                             $row->name,
                             $row->phone,
-                            $row->confirmed_at?->toDateTimeString(),
+                            $row->visited_at?->toDateTimeString(),
+                            $row->responded_at?->toDateTimeString(),
                             $row->ip_address,
                         ]);
                     }

@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 Route::get('/confirm', [ConfirmController::class, 'show'])->name('confirm.show');
+Route::post('/confirm', [ConfirmController::class, 'respond'])->name('confirm.respond');

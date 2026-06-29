@@ -53,6 +53,37 @@
             margin-top: 0.75rem;
             font-size: 0.95rem;
         }
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        .btn-confirm {
+            background: #2e7d32;
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.25);
+        }
+        .btn-decline {
+            background: #fff;
+            color: #5c5042;
+            border: 1px solid #d8cfc2;
+        }
     </style>
 </head>
 <body>
