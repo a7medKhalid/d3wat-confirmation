@@ -1,17 +1,16 @@
 @extends('confirm.layout')
 
-@section('title', 'تم التأكيد')
+@section('title', 'تم تأكيد الحضور')
 
 @section('content')
     <div class="ornament"></div>
-    <h1 class="card-title">تم التأكيد</h1>
+    <h1 class="card-title">تم تأكيد الحضور</h1>
 
     @if ($name)
         <div class="guest-name">{{ $name }}</div>
     @endif
 
-    <div class="panel">
-        <p class="message-strong">تم التأكيد..</p>
+    <div class="panel panel-green">
         <p class="message">مرحباً بكم، حُللتم أهلاً ووطئتم سهلاً</p>
     </div>
 

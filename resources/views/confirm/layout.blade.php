@@ -106,7 +106,21 @@
             padding: 1.5rem 1.25rem;
             border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 1.25rem;
-            background: var(--panel);
+        }
+
+        .panel-green {
+            background: rgba(46, 125, 50, 0.75);
+            border-color: rgba(129, 199, 132, 0.5);
+        }
+
+        .panel-yellow {
+            background: rgba(198, 168, 62, 0.78);
+            border-color: rgba(255, 224, 130, 0.45);
+            color: #2c2418;
+        }
+
+        .panel-yellow .message {
+            color: rgba(44, 36, 24, 0.88);
         }
 
         .actions {
